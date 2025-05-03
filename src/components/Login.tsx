@@ -1,6 +1,6 @@
 // src/components/Login.js
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom"; // Fixed import
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
@@ -20,7 +20,7 @@ export default function Login() {
 			await login(email, password);
 			navigate("/");
 		} catch (error) {
-			setError("Failed to log in: " + error.message);
+			setError("Failed to log in: " + (error?.message || "Unknown error")); // Safely access error.message
 		}
 		setLoading(false);
 	}
@@ -36,7 +36,7 @@ export default function Login() {
 			await resetPassword(email);
 			setError("Password reset email sent. Check your inbox.");
 		} catch (error) {
-			setError("Failed to reset password: " + error.message);
+			setError("Failed to reset password: " + (error?.message || "Unknown error")); // Safely access error.message
 		}
 		setLoading(false);
 	}
@@ -48,24 +48,33 @@ export default function Login() {
 				{error && <div className="alert alert-danger">{error}</div>}
 				<form onSubmit={handleSubmit}>
 					<div className="form-group">
-						<label>Email</label>
+						<label htmlFor="email">Email</label>
 						<input
+							id="email"
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							required
+							aria-label="Email input" // Added for accessibility
 						/>
 					</div>
 					<div className="form-group">
-						<label>Password</label>
+						<label htmlFor="password">Password</label>
 						<input
+							id="password"
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							required
+							aria-label="Password input" // Added for accessibility
 						/>
 					</div>
-					<button type="submit" className="btn-primary" disabled={loading}>
+					<button
+						type="submit"
+						className="btn-primary"
+						disabled={loading}
+						aria-label="Log In button" // Added for accessibility
+					>
 						Log In
 					</button>
 				</form>
@@ -74,6 +83,7 @@ export default function Login() {
 						className="btn-link"
 						onClick={handlePasswordReset}
 						disabled={loading}
+						aria-label="Forgot Password button" // Added for accessibility
 					>
 						Forgot Password?
 					</button>
