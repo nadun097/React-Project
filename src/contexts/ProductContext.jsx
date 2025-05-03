@@ -9,9 +9,16 @@ const ProductProvider = ({ children }) => {
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
-				const response = await fetch("https://fakestoreapi.com/product");
+				const response = await fetch("https://fakestoreapi.com/products"); // Fixed typo in URL
+				if (!response.ok) {
+					throw new Error(`HTTP error! status: ${response.status}`);
+				}
 				const data = await response.json();
-				setProducts(data);
+				if (Array.isArray(data)) {
+					setProducts(data); // Ensure only valid data is set
+				} else {
+					console.error("Unexpected data format:", data);
+				}
 			} catch (error) {
 				console.error("Error fetching products:", error);
 			}
