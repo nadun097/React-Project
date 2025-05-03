@@ -8,7 +8,7 @@ import { CartContext } from "../contexts/CartContext.jsx";
 const CartItem = ({ item }) => {
 	const { removeFromCart, increaseAmount, decreaseAmount } =
 		useContext(CartContext);
-	// destructure item
+	// destructure item eee
 	const { id, title, image, price, amount } = item;
 
 	return (
