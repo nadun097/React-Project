@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 import { IoMdAdd, IoMdClose, IoMdRemove } from "react-icons/io";
 
@@ -8,7 +8,6 @@ import { CartContext } from "../contexts/CartContext.jsx";
 const CartItem = ({ item }) => {
 	const { removeFromCart, increaseAmount, decreaseAmount } =
 		useContext(CartContext);
-	// destructure item eee
 	const { id, title, image, price, amount } = item;
 
 	return (
@@ -16,7 +15,11 @@ const CartItem = ({ item }) => {
 			<div className="w-full min-h-[150px] flex items-center gap-x-4">
 				{/* image */}
 				<Link to={`/product/${id}`}>
-					<img className="max-w-[80px]" src={image} alt="" />
+						<img
+						className="max-w-[80px]"
+						src={image}
+						alt={`Image of ${title}`}
+					/>
 				</Link>
 				<div className="w-full flex flex-col">
 					{/* title and remove icon */}
@@ -32,6 +35,7 @@ const CartItem = ({ item }) => {
 						<div
 							onClick={() => removeFromCart(id)}
 							className="text-xl cursor-pointer"
+							aria-label={`Remove ${title} from cart`}
 						>
 							<IoMdClose className="text-gray-500 hover:text-red-500 transition" />
 						</div>
@@ -42,6 +46,7 @@ const CartItem = ({ item }) => {
 							<div
 								onClick={() => decreaseAmount(id)}
 								className="h-full flex-1 flex justify-center items-center cursor-pointer"
+								aria-label={`Decrease quantity of ${title}`}
 							>
 								<IoMdRemove />
 							</div>
@@ -51,6 +56,7 @@ const CartItem = ({ item }) => {
 							<div
 								onClick={() => increaseAmount(id)}
 								className="h-full flex flex-1 justify-center items-center cursor-pointer"
+								aria-label={`Increase quantity of ${title}`}
 							>
 								<IoMdAdd />
 							</div>

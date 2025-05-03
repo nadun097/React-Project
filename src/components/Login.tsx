@@ -36,7 +36,7 @@ export default function Login() {
 			await resetPassword(email);
 			setError("Password reset email sent. Check your inbox.");
 		} catch (error) {
-			setError("Failed to reset password: " + (error?.message || "Unknown error")); // Safely access error.message
+			setError("Failed to reset password: " + (error?.message || "Unknown error")); 
 		}
 		setLoading(false);
 	}
